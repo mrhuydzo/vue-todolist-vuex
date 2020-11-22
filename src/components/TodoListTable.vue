@@ -32,6 +32,7 @@
 </template>
 
 <script>
+    import {mapState,mapActions} from 'vuex';
     import TodoListItem from "./TodoListItem";
 
     export default {
@@ -39,24 +40,31 @@
         components: {
             TodoListItem
         },
-        props: {
-            listTask: {
-                type: Array,
-                default: []
-            }
+        computed: {
+            ...mapState(['listTask'])
+        },
+        created(){
+            let tasks = localStorage.getItem('tasks') || '[]';
+            this.changeTask(JSON.parse(tasks));
         },
         data() {
             return {}
         },
         methods: {
+            ...mapActions(['changeTask']),
             handleDelete(taskDelete){
-                //console.log('handleDelete TodoListTable.vue',taskDelete);
                 this.$emit('handleDelete',taskDelete);
             },
             handleEdit(taskEdit){
-                //console.log('handleEdit TodoListTable.vue',taskEdit);
                 this.$emit('handleEdit',taskEdit);
             }
-        }
+        },
+        watch: {
+            listTask:function(newTask){
+                var taskString = JSON.stringify(newTask);
+                    localStorage.setItem('tasks',taskString)
+                    //console.log('watch',newTask);
+            }
+        },
     }
 </script>

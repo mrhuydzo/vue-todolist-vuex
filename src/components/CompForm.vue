@@ -1,10 +1,7 @@
 <template>
     <!-- FORM : START -->
     <b-col cols="12" lg="6">
-        <form-add
-            v-bind:isShowForm="isShowForm"
-            v-on:handleToogleForm="handleToogleForm"
-        />
+        <form-add/>
         <form v-if="isShowForm" action="" method="POST" class="form-inline justify-content-between">
             <div class="form-group">
                 <label class="sr-only" for="taskname">label</label>
@@ -29,16 +26,17 @@
     <!-- FORM : END -->
 </template>
 <script>
+    import {mapState,mapActions} from 'vuex';
     import FormAdd from "./FormAdd";
     import { v4 as uuidv4 } from 'uuid';
 
     export default {
         name: 'comp-form',
         components: {
-            FormAdd
+            FormAdd,
         },
+        computed: mapState(['isShowForm']),
         props: {
-            isShowForm: {type: Boolean,default: false},
             taskSelected: {type: Object,default: null}
         },
         data() {
@@ -61,13 +59,14 @@
             // console.log(this.taskSelected);
         },
         methods: {
+            ...mapActions(['toggleForm']),
             handleCancel() {
-                this.$emit('toggleForm');
+                console.log('handleCancel CompForm.vue');
+                this.toggleForm();
+                //this.$store.dispatch('toggleForm');
                 this.handleResetData();
             },
-            handleToogleForm() {
-                this.$emit('toggleForm');
-            },
+
             handleAddNew() {
                 let objTask = {
                     id:  uuidv4(),

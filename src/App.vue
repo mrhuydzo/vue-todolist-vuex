@@ -11,15 +11,12 @@
                     v-on:handleSort="handleSort"
                 />
                 <comp-form
-                    v-bind:isShowForm="isShowForm"
                     v-bind:taskSelected="taskSelected"
-                    v-on:toggleForm="toggleForm"
                     v-on:handleAddNewTask="handleAddNewTask"
                     v-on:handleEditTaskById="handleEditTaskById"
                 />
             </b-row>
             <todo-list-table
-                v-bind:listTask="listTaskSort"
                 v-on:handleDelete="handleDelete"
                 v-on:handleEdit="handleEdit"
             />
@@ -33,8 +30,6 @@
     import CompControl from './components/CompControl';
     import CompForm from "./components/CompForm";
 
-    import dataTask from './mocks/dataTask'
-
     export default {
         name: 'App',
         components: {
@@ -45,7 +40,6 @@
         },
         data() {
             return {
-                listTask: dataTask,
                 isShowForm: false,
                 strSearch: '',
                 orderBy: 'name',
@@ -53,23 +47,7 @@
                 taskSelected: null
             }
         },
-        watch: {
-            listTask:function(newTask){
-                var taskString = JSON.stringify(newTask);
-                    localStorage.setItem('tasks',taskString)
-                    //console.log('watch',newTask);
-            }
-        },
-        created() {
-            //Lấy listTask từ localStorage
-            let tasks =  localStorage.getItem('tasks');
-            if (tasks !== null) {
-                this.listTask = JSON.parse(tasks);
-            }else {
-                this.listTask = []
-            }
-            //console.log(localStorage.getItem('tasks'));
-        },
+
         computed: {
             listTaskSearch() {
                 //Tìm kiếm - logic search
@@ -102,13 +80,6 @@
             }
         },
         methods: {
-            toggleForm() {
-                //console.log('toggleForm App.vue');
-                if (this.isShowForm) {
-                    this.taskSelected = null;
-                }
-                this.isShowForm = !this.isShowForm;
-            },
             handleSearch(data) {
                 this.strSearch = data;
                 //console.log('handleSearch App.vue',data);
