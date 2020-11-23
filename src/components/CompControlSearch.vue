@@ -13,22 +13,20 @@
 </template>
 <script>
     //v-model => v-bind => v-on:input
+    import {mapState} from 'vuex';
     export default {
         name: 'comp-control-search',
-        props: {
-            strSearch: {type: String,default: ''}
-        },
         data() {
             return {}
         },
+        computed:  mapState(['strSearch']),
         methods: {
             handleSearch(e){
-                console.log('CompControlSearch.vue');
-                this.$emit('handleSearch',e.target.value);
+                this.$store.dispatch('handleSearch',e.target.value);
             },
             handleClear() {
                 //Thay đổi giá trị strSearch = ''
-                this.$emit('handleSearch','');
+                this.$store.dispatch('handleSearch','');
             }
         }
     }

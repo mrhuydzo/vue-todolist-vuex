@@ -7,7 +7,6 @@
                     v-bind:strSearch="strSearch"
                     v-bind:orderBy="orderBy"
                     v-bind:orderDir="orderDir"
-                    v-on:handleSearch="handleSearch"
                     v-on:handleSort="handleSort"
                 />
                 <comp-form
@@ -80,10 +79,6 @@
             }
         },
         methods: {
-            handleSearch(data) {
-                this.strSearch = data;
-                //console.log('handleSearch App.vue',data);
-            },
             handleSort(data) {
                 this.orderBy = data.orderBy;
                 this.orderDir = data.orderDir;

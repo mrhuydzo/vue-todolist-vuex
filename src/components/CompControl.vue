@@ -13,10 +13,7 @@
 
             <!-- SEARCH : START -->
             <div class="col-12">
-                <comp-control-search
-                    v-on:handleSearch="handleSearch"
-                    v-bind:strSearch="strSearch"
-                />
+                <comp-control-search/>
             </div>
             <!-- SEARCH : END -->
         </div>
@@ -30,7 +27,6 @@
         name: 'comp-control',
         components: {CompControlSearch, CompControlSort},
         props: {
-            strSearch: {type: String, default: ''},
             orderBy: {type: String,default: 'name'},
             orderDir: {type: String,default: 'asc'},
         },
@@ -38,10 +34,6 @@
             return {}
         },
         methods: {
-            handleSearch(data) {
-                //console.log('handleSearch CompControl.vue', data);
-                this.$emit('handleSearch',data);
-            },
             handleSort (data) {
                 //console.log('handleSort CompControl.vue',data);
                 this.$emit('handleSort',data);
