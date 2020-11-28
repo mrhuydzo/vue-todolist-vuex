@@ -1,5 +1,5 @@
 export default  {
-    listTaskSearch: state => {
+    listTaskSearchSort: state => {
         //Tìm kiếm - logic search
         const {strSearch} = state;
         //Cach 1
@@ -16,7 +16,26 @@ export default  {
         var newItems = state.listTask.filter(item => {
             return item.taskName.toLowerCase().includes(strSearch.toLowerCase());
         });
-        console.log('getters ListTasksSearch')
-        return newItems;
+        //console.log('getters ListTasksSearch');
+
+
+        //SORT
+        var listTask = [...newItems];
+        listTask.sort(function (a,b) {
+            var numberSort = state.orderDir === 'asc' ? -1 : 1;
+            if (a[state.orderBy] < b[state.orderBy]) return numberSort  ;
+            else if (a[state.orderBy] > b[state.orderBy]) return numberSort * (-1);
+            return 0
+        });
+
+        return listTask
+
+        // if (this.orderBy === 'name') {
+        //     listTask.sort(this.compareName);
+        // }else if (this.orderBy === 'level'){
+        //     listTask.sort(this.compareLevel);
+        // }
+
+
     }
 }

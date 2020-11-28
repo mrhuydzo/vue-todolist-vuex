@@ -7,25 +7,29 @@
             <b-dropdown-item v-on:click="handleSort('level','asc')">Level ASC</b-dropdown-item>
             <b-dropdown-item v-on:click="handleSort('level','desc')">Level DESC</b-dropdown-item>
         </b-dropdown>
-        <span class="badge badge-success badge-medium">{{orderBy}} - {{orderDir}}</span>
+<!--        <span class="badge badge-success badge-medium">{{this.state.orderBy}} - {{this.state.orderDir}}</span>-->
     </div>
 </template>
 <script>
+    import {mapState,mapActions} from 'vuex';
     export default {
         name: 'comp-control-sort',
         data() {
             return {}
         },
-        props: {
-            orderBy: {type: String,default: 'name'},
-            orderDir: {type: String,default: 'asc'},
-        },
+
         methods: {
+            ...mapActions({
+                'actionHandleSort': 'handleSort',
+            }),
             handleSort(orderBy,orderDir) {
                 let data = {orderBy,orderDir};
-                //console.log('handleSort CompControlSort.vue',data);
-                this.$emit('handleSort',data);
+                console.log('handleSort CompControlSort.vue',data);
+                this.actionHandleSort(data);
             }
+        },
+        computed: {
+            ...mapState(['orderBy,orderDir'])
         }
     }
 </script>

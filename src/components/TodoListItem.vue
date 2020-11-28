@@ -14,7 +14,7 @@
 
 <script>
     import dataLevel from '../mocks/dataLevel'
-
+    import {mapActions} from 'vuex';
     export default {
         name: 'todo-list-item',
         props: {
@@ -35,13 +35,17 @@
             }
         },
         methods: {
+            ...mapActions({
+                'actionHandleDelete': 'handleDelete',
+                'actionHandleEdit': 'handleEdit',
+            }),
             handleDelete() {
-                if (confirm('Bạn có muốn xóa task id:' + this.task.id)) ;
-                this.$emit('handleDelete', this.task);
+                if (confirm('Bạn có muốn xóa task id:' + this.task.name)) {
+                    this.actionHandleDelete(this.task)
+                }
             },
             handleEdit() {
-                //console.log('Edit TodoListItem.vue', this.task)
-                this.$emit('handleEdit', this.task);
+                this.actionHandleEdit(this.task);
             }
         }
     }

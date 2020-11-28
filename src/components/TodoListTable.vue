@@ -16,7 +16,6 @@
                 v-bind:key="task.id"
                 v-bind:task="task"
                 v-bind:index = "index + 1"
-                v-on:handleDelete="handleDelete"
                 v-on:handleEdit="handleEdit"
             />
             </tbody>
@@ -41,9 +40,8 @@
             TodoListItem
         },
         computed: {
-            //...mapState(['listTask'])
             ...mapGetters({
-                listTask:'listTaskSearch'
+                listTask: 'listTaskSearchSort'
             })
         },
         created(){
@@ -55,18 +53,10 @@
         },
         methods: {
             ...mapActions(['changeTask']),
-            handleDelete(taskDelete){
-                this.$emit('handleDelete',taskDelete);
-            },
             handleEdit(taskEdit){
                 this.$emit('handleEdit',taskEdit);
             }
         },
-        watch: {
-            // listTask:function(newTask){
-            //     var taskString = JSON.stringify(newTask);
-            //         localStorage.setItem('tasks',taskString)
-            // }
-        },
+
     }
 </script>

@@ -35,10 +35,7 @@
         components: {
             FormAdd,
         },
-        computed: mapState(['isShowForm']),
-        props: {
-            taskSelected: {type: Object,default: null}
-        },
+        computed: mapState(['isShowForm','taskSelected']),
         data() {
             return {
                 taskName: '',
@@ -55,11 +52,8 @@
                 console.log("watch",newData,oldData)
             }
         },
-        beforeUpdate() {
-            // console.log(this.taskSelected);
-        },
         methods: {
-            ...mapActions(['toggleForm']),
+            ...mapActions(['toggleForm','handleAddNewTask','handleEditTaskById']),
             handleCancel() {
                 console.log('handleCancel CompForm.vue');
                 this.toggleForm();
@@ -68,18 +62,17 @@
             },
 
             handleAddNew() {
-                let objTask = {
-                    id:  uuidv4(),
-                    taskName: this.taskName,
-                    level: parseInt(this.level)
-                };
-                this.$emit('handleAddNewTask',objTask);
-                this.handleCancel();
-
-                // Validate
-                // if (this.taskName === '') {
-                //     alert('Bạn chưa nhập')
-                // }
+                if(this.taskName.trim()){
+                    let objTask = {
+                        id:  uuidv4(),
+                        taskName: this.taskName.trim(),
+                        level: parseInt(this.level)
+                    };
+                    this.handleAddNewTask(objTask);
+                    this.handleCancel();
+                }else {
+                    alert('Nhap di');
+                }
             },
             handleResetData () {
                 this.taskName = '';
@@ -91,9 +84,9 @@
                     taskName : this.taskName,
                     level : parseInt(this.level),
                 }
-                this.$emit('handleEditTaskById',objectTaskEdit);
+                this.handleEditTaskById(objectTaskEdit);
                 this.handleResetData();
-                //console.log('handleEditTask CompForm.vue',this.taskSelected)
+
             }
         }
     }
